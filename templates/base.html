@@ -41,7 +41,12 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'users:update' user.pk %}">{% trans "Change" %}</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'users:logout' %}">{% trans "Logout" %}</a></li>
+                                <li>
+                                    <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item btn btn-link">{% trans "Logout" %}</button>
+                                    </form>
+                                </li>
                             </ul>
                         </li>
                     {% else %}
