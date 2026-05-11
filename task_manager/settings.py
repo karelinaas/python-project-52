@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -87,8 +88,16 @@ import dj_database_url
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# Для локальной разработки используем SQLite, для продакшена - PostgreSQL
-if os.getenv("DB_ENGINE") == "django.db.backends.postgresql":
+# Для локальной разработки и тестов используем SQLite, для прода - PostgreSQL.
+# Для тестов всегда используем SQLite в памяти.
+if "test" in sys.argv:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": ":memory:",
+        }
+    }
+elif os.getenv("DB_ENGINE") == "django.db.backends.postgresql":
     DATABASES = {
         "default": dj_database_url.parse(
             f"postgresql://{os.getenv('POSTGRES_USER')}:"

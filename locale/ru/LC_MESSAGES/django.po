@@ -102,23 +102,8 @@ msgstr "Да, удалить"
 msgid "Cancel"
 msgstr "Отмена"
 
-msgid "Login"
-msgstr "Вход"
-
 msgid "Logout"
 msgstr "Выход"
 
-msgid "Register"
-msgstr "Регистрация"
-
-msgid "Users"
-msgstr "Пользователи"
-
-msgid "Go to Tasks"
-msgstr "Перейти к задачам"
-
-msgid "Manage Users"
-msgstr "Управление пользователями"
-
-msgid "Are you sure you want to delete user \"%(username)s\"?"
-msgstr "Вы уверены, что хотите удалить пользователя \"%(username)s\"?"
+msgid "Are you sure you want to delete user "
+msgstr "Вы уверены, что хотите удалить пользователя "

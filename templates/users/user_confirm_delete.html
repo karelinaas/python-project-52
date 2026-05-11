@@ -10,9 +10,8 @@
             </div>
             <div class="card-body">
                 <p class="mb-4">
-                    {% blocktrans with username=object.username %}
-                        Are you sure you want to delete user "{{ username }}"?
-                    {% endblocktrans %}
+                    {% trans "Are you sure you want to delete user " %}
+                    "{{ object.username }}"?
                 </p>
                 
                 <form method="post">
