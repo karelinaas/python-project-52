@@ -24,9 +24,15 @@ msgstr "Пользователи"
 msgid "Login"
 msgstr "Вход"
 
+msgid "Log in"
+msgstr "Войти"
+
 #: templates/base.html:40 templates/home.html:43
-msgid "Register"
+msgid "Registration"
 msgstr "Регистрация"
+
+msgid "Register"
+msgstr "Зарегистрировать"
 
 #: templates/home.html:7
 msgid "Welcome to Task Manager"
