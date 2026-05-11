@@ -1,5 +1,6 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
+from django.shortcuts import render
 
 
-def home(_: HttpRequest) -> HttpResponse:
-    return HttpResponse("Привет! Добро пожаловать в трекер задач.")
+def home(request: HttpRequest):
+    return render(request, 'home.html')

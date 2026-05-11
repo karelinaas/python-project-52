@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h1>{% trans "Welcome to Task Manager" %}</h1>
+        <p class="lead">{% trans "Manage your tasks efficiently and collaborate with your team." %}</p>
+        
+        <div class="mt-4">
+            <h2>{% trans "Quick Links" %}</h2>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{% trans "Task Manager" %}</h5>
+                            <p class="card-text">{% trans "View and manage all your tasks in one place." %}</p>
+                            <a href="#" class="btn btn-primary">{% trans "Go to Tasks" %}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{% trans "Users" %}</h5>
+                            <p class="card-text">{% trans "Manage users and their permissions." %}</p>
+                            <a href="#" class="btn btn-primary">{% trans "Manage Users" %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>{% trans "Account Actions" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="#" class="btn btn-outline-primary">{% trans "Login" %}</a>
+                    <a href="#" class="btn btn-outline-success">{% trans "Register" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: task_manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-11 16:35+0300\n"
+"PO-Revision-Date: 2026-05-11 16:35+0300\n"
+"Last-Translator: Alexandra Minina <i@minina-work.ru>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Task Manager"
+msgstr "Менеджер задач"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "Login"
+msgstr "Вход"
+
+msgid "Register"
+msgstr "Регистрация"
+
+msgid "Welcome to Task Manager"
+msgstr "Добро пожаловать в менеджер задач"
+
+msgid "Manage your tasks efficiently and collaborate with your team."
+msgstr "Эффективно управляйте задачами и сотрудничайте с вашей командой."
+
+msgid "Quick Links"
+msgstr "Быстрые ссылки"
+
+msgid "View and manage all your tasks in one place."
+msgstr "Просматривайте и управляйте всеми задачами в одном месте."
+
+msgid "Go to Tasks"
+msgstr "Перейти к задачам"
+
+msgid "Manage users and their permissions."
+msgstr "Управляйте пользователями и их правами доступа."
+
+msgid "Manage Users"
+msgstr "Управление пользователями"
+
+msgid "Account Actions"
+msgstr "Действия с аккаунтом"
