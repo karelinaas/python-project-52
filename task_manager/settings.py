@@ -81,12 +81,28 @@ WSGI_APPLICATION = "task_manager.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+import dj_database_url
+
+# Database
+# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
+# Для локальной разработки используем SQLite, для продакшена - PostgreSQL
+if os.getenv("DB_ENGINE") == "django.db.backends.postgresql":
+    DATABASES = {
+        "default": dj_database_url.parse(
+            f"postgresql://{os.getenv('POSTGRES_USER')}:"
+            f"{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('DB_HOST')}:"
+            f"{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+        )
     }
-}
+else:
+    # Локальная разработка - SQLite
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
