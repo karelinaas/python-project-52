@@ -18,6 +18,11 @@ migrate:
 start:
 	uv run manage.py runserver $(PORT)
 
+stop:
+	pkill -f "manage.py runserver" || true
+
+restart: stop start
+
 render-start:
 	gunicorn task_manager.wsgi
 
