@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: task_manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 16:35+0300\n"
+"POT-Creation-Date: 2026-05-11 13:42+0000\n"
 "PO-Revision-Date: 2026-05-11 16:35+0300\n"
 "Last-Translator: Alexandra Minina <i@minina-work.ru>\n"
 "Language-Team: Russian\n"
@@ -11,38 +11,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: templates/base.html:8 templates/base.html:22 templates/base.html:29
+#: templates/home.html:16
 msgid "Task Manager"
 msgstr "Менеджер задач"
 
+#: templates/base.html:32 templates/home.html:25
 msgid "Users"
 msgstr "Пользователи"
 
+#: templates/base.html:37 templates/home.html:42
 msgid "Login"
 msgstr "Вход"
 
+#: templates/base.html:40 templates/home.html:43
 msgid "Register"
 msgstr "Регистрация"
 
+#: templates/home.html:7
 msgid "Welcome to Task Manager"
 msgstr "Добро пожаловать в менеджер задач"
 
+#: templates/home.html:8
 msgid "Manage your tasks efficiently and collaborate with your team."
 msgstr "Эффективно управляйте задачами и сотрудничайте с вашей командой."
 
+#: templates/home.html:11
 msgid "Quick Links"
 msgstr "Быстрые ссылки"
 
+#: templates/home.html:17
 msgid "View and manage all your tasks in one place."
 msgstr "Просматривайте и управляйте всеми задачами в одном месте."
 
+#: templates/home.html:18
 msgid "Go to Tasks"
 msgstr "Перейти к задачам"
 
+#: templates/home.html:26
 msgid "Manage users and their permissions."
 msgstr "Управляйте пользователями и их правами доступа."
 
+#: templates/home.html:27
 msgid "Manage Users"
 msgstr "Управление пользователями"
 
+#: templates/home.html:38
 msgid "Account Actions"
 msgstr "Действия с аккаунтом"

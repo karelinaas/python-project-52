@@ -19,7 +19,7 @@ start:
 	uv run manage.py runserver $(PORT)
 
 stop:
-	pkill -f "manage.py runserver" || true
+	@lsof -t -i :$(PORT) | xargs kill -9 || true
 
 restart: stop start
 
