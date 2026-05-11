@@ -29,16 +29,29 @@
                         <a class="nav-link" href="{% url 'home' %}">{% trans "Task Manager" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{% trans "Users" %}</a>
+                        <a class="nav-link" href="{% url 'users:list' %}">{% trans "Users" %}</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">{% trans "Login" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">{% trans "Register" %}</a>
-                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'users:update' user.pk %}">{% trans "Change" %}</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'users:logout' %}">{% trans "Logout" %}</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:login' %}">{% trans "Login" %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:create' %}">{% trans "Register" %}</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

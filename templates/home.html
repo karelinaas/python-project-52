@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{% trans "Users" %}</h5>
                             <p class="card-text">{% trans "Manage users and their permissions." %}</p>
-                            <a href="#" class="btn btn-primary">{% trans "Manage Users" %}</a>
+                            <a href="{% url 'users:list' %}" class="btn btn-primary">{% trans "Manage Users" %}</a>
                         </div>
                     </div>
                 </div>
@@ -39,8 +39,8 @@
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
-                    <a href="#" class="btn btn-outline-primary">{% trans "Login" %}</a>
-                    <a href="#" class="btn btn-outline-success">{% trans "Register" %}</a>
+                    <a href="{% url 'users:login' %}" class="btn btn-outline-primary">{% trans "Login" %}</a>
+                    <a href="{% url 'users:create' %}" class="btn btn-outline-success">{% trans "Register" %}</a>
                 </div>
             </div>
         </div>

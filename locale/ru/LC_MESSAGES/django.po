@@ -59,3 +59,66 @@ msgstr "Управление пользователями"
 #: templates/home.html:38
 msgid "Account Actions"
 msgstr "Действия с аккаунтом"
+
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "First Name"
+msgstr "Имя"
+
+msgid "Last Name"
+msgstr "Фамилия"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Change"
+msgstr "Изменить"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "No users found"
+msgstr "Пользователи не найдены"
+
+msgid "Edit User"
+msgstr "Редактировать пользователя"
+
+msgid "Register User"
+msgstr "Зарегистрировать пользователя"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Password Confirmation"
+msgstr "Подтверждение пароля"
+
+msgid "Delete User"
+msgstr "Удалить пользователя"
+
+msgid "Yes, delete"
+msgstr "Да, удалить"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Login"
+msgstr "Вход"
+
+msgid "Logout"
+msgstr "Выход"
+
+msgid "Register"
+msgstr "Регистрация"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "Go to Tasks"
+msgstr "Перейти к задачам"
+
+msgid "Manage Users"
+msgstr "Управление пользователями"
+
+msgid "Are you sure you want to delete user \"%(username)s\"?"
+msgstr "Вы уверены, что хотите удалить пользователя \"%(username)s\"?"
