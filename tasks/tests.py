@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from labels.models import Label
 from statuses.models import Status
+from tasks.filters import TaskFilter
 from tasks.models import Task
 
 User = get_user_model()
@@ -315,3 +316,190 @@ class TaskCRUDTest(TestCase):
             str(messages[0]),
             _("Only task author can delete task"),
         )
+
+
+class TaskFilterTest(TestCase):
+    USERNAME = "testuser"
+    PASSWORD = "testpass123"
+    OTHER_USERNAME = "otheruser"
+    OTHER_PASSWORD = "otherpass123"
+
+    def setUp(self):
+        # Создание пользователей
+        self.user = User.objects.create(username=self.USERNAME)
+        self.user.set_password(self.PASSWORD)
+        self.user.save()
+        
+        self.other_user = User.objects.create(username=self.OTHER_USERNAME)
+        self.other_user.set_password(self.OTHER_PASSWORD)
+        self.other_user.save()
+        
+        # Создание статусов
+        self.status1 = Status.objects.create(name="In Progress")
+        self.status2 = Status.objects.create(name="Completed")
+        
+        # Создание меток
+        self.label1 = Label.objects.create(name="Bug")
+        self.label2 = Label.objects.create(name="Feature")
+        
+        # Создание задач
+        self.task1 = Task.objects.create(
+            name="Task 1",
+            description="Description 1",
+            status=self.status1,
+            author=self.user,
+            executor=self.other_user,
+        )
+        self.task1.labels.add(self.label1)
+        
+        self.task2 = Task.objects.create(
+            name="Task 2",
+            description="Description 2",
+            status=self.status2,
+            author=self.other_user,
+            executor=self.user,
+        )
+        self.task2.labels.add(self.label2)
+        
+        self.task3 = Task.objects.create(
+            name="Task 3",
+            description="Description 3",
+            status=self.status1,
+            author=self.user,
+            executor=None,
+        )
+
+    def test_filter_by_status(self):
+        """Тест фильтрации задач по статусу"""
+        queryset = Task.objects.all()
+        filter_data = {"status": self.status1.pk}
+        task_filter = TaskFilter(filter_data, queryset=queryset)
+        
+        filtered_tasks = task_filter.qs
+        self.assertEqual(filtered_tasks.count(), 2)
+        self.assertIn(self.task1, filtered_tasks)
+        self.assertIn(self.task3, filtered_tasks)
+        self.assertNotIn(self.task2, filtered_tasks)
+
+    def test_filter_by_executor(self):
+        """Тест фильтрации задач по исполнителю"""
+        queryset = Task.objects.all()
+        filter_data = {"executor": self.user.pk}
+        task_filter = TaskFilter(filter_data, queryset=queryset)
+        
+        filtered_tasks = task_filter.qs
+        self.assertEqual(filtered_tasks.count(), 1)
+        self.assertIn(self.task2, filtered_tasks)
+        self.assertNotIn(self.task1, filtered_tasks)
+        self.assertNotIn(self.task3, filtered_tasks)
+
+    def test_filter_by_label(self):
+        """Тест фильтрации задач по метке"""
+        queryset = Task.objects.all()
+        filter_data = {"labels": self.label1.pk}
+        task_filter = TaskFilter(filter_data, queryset=queryset)
+        
+        filtered_tasks = task_filter.qs
+        self.assertEqual(filtered_tasks.count(), 1)
+        self.assertIn(self.task1, filtered_tasks)
+        self.assertNotIn(self.task2, filtered_tasks)
+        self.assertNotIn(self.task3, filtered_tasks)
+
+    def test_filter_own_tasks_true(self):
+        """Тест фильтрации 'Только свои задачи' - включено"""
+        queryset = Task.objects.all()
+        filter_data = {"own_tasks": True}
+        
+        # Создание мок-запроса с пользователем
+        class MockRequest:
+            def __init__(self, user):
+                self.user = user
+        
+        request = MockRequest(self.user)
+        task_filter = TaskFilter(
+            filter_data,
+            queryset=queryset,
+            request=request,
+        )
+        
+        filtered_tasks = task_filter.qs
+        self.assertEqual(filtered_tasks.count(), 2)
+        self.assertIn(self.task1, filtered_tasks)
+        self.assertIn(self.task3, filtered_tasks)
+        self.assertNotIn(self.task2, filtered_tasks)
+
+    def test_filter_own_tasks_false(self):
+        """Тест фильтрации 'Только свои задачи' - выключено"""
+        queryset = Task.objects.all()
+        filter_data = {"own_tasks": False}
+        task_filter = TaskFilter(filter_data, queryset=queryset)
+        
+        filtered_tasks = task_filter.qs
+        self.assertEqual(filtered_tasks.count(), 3)
+        self.assertIn(self.task1, filtered_tasks)
+        self.assertIn(self.task2, filtered_tasks)
+        self.assertIn(self.task3, filtered_tasks)
+
+    def test_filter_combined(self):
+        """Тест комбинированной фильтрации"""
+        queryset = Task.objects.all()
+        filter_data = {
+            "status": self.status1.pk,
+            "executor": self.other_user.pk,
+        }
+        task_filter = TaskFilter(filter_data, queryset=queryset)
+        
+        filtered_tasks = task_filter.qs
+        self.assertEqual(filtered_tasks.count(), 1)
+        self.assertIn(self.task1, filtered_tasks)
+        self.assertNotIn(self.task2, filtered_tasks)
+        self.assertNotIn(self.task3, filtered_tasks)
+
+    def test_filter_no_filters(self):
+        """Тест без фильтров - должны вернуться все задачи"""
+        queryset = Task.objects.all()
+        filter_data = {}
+        task_filter = TaskFilter(filter_data, queryset=queryset)
+        
+        filtered_tasks = task_filter.qs
+        self.assertEqual(filtered_tasks.count(), 3)
+        self.assertIn(self.task1, filtered_tasks)
+        self.assertIn(self.task2, filtered_tasks)
+        self.assertIn(self.task3, filtered_tasks)
+
+    def test_task_list_view_with_filters(self):
+        """Тест представления списка задач с фильтрами"""
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
+        
+        # Тест фильтрации по статусу
+        response = self.client.get(
+            reverse("tasks:list"),
+            {"status": self.status1.pk},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Task 1")
+        self.assertContains(response, "Task 3")
+        self.assertNotContains(response, "Task 2")
+        
+        # Тест фильтрации 'Только свои задачи'
+        response = self.client.get(
+            reverse("tasks:list"),
+            {"own_tasks": "on"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Task 1")
+        self.assertContains(response, "Task 3")
+        self.assertNotContains(response, "Task 2")
+
+    def test_task_list_view_filter_form_rendered(self):
+        """Тест того, что форма фильтрации отображается на странице"""
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
+        response = self.client.get(reverse("tasks:list"))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Status")
+        self.assertContains(response, "Executor")
+        self.assertContains(response, "Label")
+        self.assertContains(response, "Only own tasks")
+        self.assertContains(response, "Filter")
+        self.assertContains(response, "Clear")

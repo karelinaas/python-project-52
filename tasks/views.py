@@ -9,19 +9,23 @@ from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
-    ListView,
     UpdateView,
 )
+from django_filters.views import FilterView
 
+from tasks.filters import TaskFilter
 from tasks.forms import TaskForm
 from tasks.models import Task
 
 
-class TaskListView(LoginRequiredMixin, ListView):
+class TaskListView(LoginRequiredMixin, FilterView):
     model = Task
     template_name = "tasks/list.html"
     context_object_name = "tasks"
     extra_context = {"title": _("Tasks")}
+    filterset_class = TaskFilter
+    paginate_by = 10
+
     queryset = Task.objects.select_related(
         "author",
         "executor",

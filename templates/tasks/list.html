@@ -11,6 +11,48 @@
             </a>
         </div>
 
+        <!-- Форма фильтрации задач -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-3">
+                        <label for="{{ filter.form.status.id_for_label }}" class="form-label">
+                            {% trans "Status" %}
+                        </label>
+                        {{ filter.form.status }}
+                    </div>
+                    <div class="col-md-3">
+                        <label for="{{ filter.form.executor.id_for_label }}" class="form-label">
+                            {% trans "Executor" %}
+                        </label>
+                        {{ filter.form.executor }}
+                    </div>
+                    <div class="col-md-3">
+                        <label for="{{ filter.form.labels.id_for_label }}" class="form-label">
+                            {% trans "Label" %}
+                        </label>
+                        {{ filter.form.labels }}
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-check mt-4">
+                            {{ filter.form.own_tasks }}
+                            <label class="form-check-label" for="{{ filter.form.own_tasks.id_for_label }}">
+                                {% trans "Only own tasks" %}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                            {% trans "Filter" %}
+                        </button>
+                        <a href="{% url 'tasks:list' %}" class="btn btn-secondary">
+                            {% trans "Clear" %}
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         {% if tasks %}
         <div class="table-responsive">
             <table class="table table-striped table-hover">

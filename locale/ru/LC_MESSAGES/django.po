@@ -389,3 +389,33 @@ msgstr "Пользователь успешно удален"
 #: users/views.py:94
 msgid "Cannot delete user while they have associated tasks"
 msgstr "Нельзя удалить пользователя, пока он связан с задачами"
+
+msgid "Only own tasks"
+msgstr "Только свои задачи"
+
+msgid "All statuses"
+msgstr "Все статусы"
+
+msgid "All executors"
+msgstr "Все исполнители"
+
+msgid "All labels"
+msgstr "Все метки"
+
+msgid "Filter"
+msgstr "Фильтровать"
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
