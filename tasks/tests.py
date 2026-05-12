@@ -324,6 +324,10 @@ class TaskFilterTest(TestCase):
     OTHER_USERNAME = "otheruser"
     OTHER_PASSWORD = "otherpass123"
 
+    TASK_NAME_1 = "Task 1"
+    TASK_NAME_2 = "Qwertyuiop Asdfghjkl"
+    TASK_NAME_3 = "Task Three"
+
     def setUp(self):
         # Создание пользователей
         self.user = User.objects.create(username=self.USERNAME)
@@ -344,7 +348,7 @@ class TaskFilterTest(TestCase):
         
         # Создание задач
         self.task1 = Task.objects.create(
-            name="Task 1",
+            name=self.TASK_NAME_1,
             description="Description 1",
             status=self.status1,
             author=self.user,
@@ -353,7 +357,7 @@ class TaskFilterTest(TestCase):
         self.task1.labels.add(self.label1)
         
         self.task2 = Task.objects.create(
-            name="Task 2",
+            name=self.TASK_NAME_2,
             description="Description 2",
             status=self.status2,
             author=self.other_user,
@@ -362,7 +366,7 @@ class TaskFilterTest(TestCase):
         self.task2.labels.add(self.label2)
         
         self.task3 = Task.objects.create(
-            name="Task 3",
+            name=self.TASK_NAME_3,
             description="Description 3",
             status=self.status1,
             author=self.user,
@@ -477,9 +481,9 @@ class TaskFilterTest(TestCase):
             {"status": self.status1.pk},
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Task 1")
-        self.assertContains(response, "Task 3")
-        self.assertNotContains(response, "Task 2")
+        self.assertContains(response, self.TASK_NAME_1)
+        self.assertContains(response, self.TASK_NAME_3)
+        self.assertNotContains(response, self.TASK_NAME_2)
         
         # Тест фильтрации 'Только свои задачи'
         response = self.client.get(
@@ -487,9 +491,9 @@ class TaskFilterTest(TestCase):
             {"own_tasks": "on"},
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Task 1")
-        self.assertContains(response, "Task 3")
-        self.assertNotContains(response, "Task 2")
+        self.assertContains(response, self.TASK_NAME_1)
+        self.assertContains(response, self.TASK_NAME_3)
+        self.assertNotContains(response, self.TASK_NAME_2)
 
     def test_task_list_view_filter_form_rendered(self):
         """Тест того, что форма фильтрации отображается на странице"""
@@ -497,9 +501,9 @@ class TaskFilterTest(TestCase):
         response = self.client.get(reverse("tasks:list"))
         
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Status")
-        self.assertContains(response, "Executor")
-        self.assertContains(response, "Label")
-        self.assertContains(response, "Only own tasks")
-        self.assertContains(response, "Filter")
-        self.assertContains(response, "Clear")
+        self.assertContains(response, _("Status"))
+        self.assertContains(response, _("Executor"))
+        self.assertContains(response, _("Label"))
+        self.assertContains(response, _("Only own tasks"))
+        self.assertContains(response, _("Filter"))
+        self.assertContains(response, _("Clear"))

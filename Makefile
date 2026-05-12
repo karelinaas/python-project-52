@@ -38,3 +38,7 @@ test-cov:
 test-clean:
 	rm -rf htmlcov/
 	rm -f .coverage
+
+lang-files:
+	uv run manage.py makemessages -l ru
+	uv run manage.py compilemessages
