@@ -11,13 +11,13 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import os
-import sys
 from pathlib import Path
 
+import dj_database_url
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 load_dotenv()
 
@@ -28,7 +28,7 @@ load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-# SECURITY WARNING: don"t run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv("DEBUG", "False"))
 
 ALLOWED_HOSTS = (
@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "users",
+    "statuses",
+    "tasks",
 ]
 
 MIDDLEWARE = [
@@ -83,36 +85,13 @@ WSGI_APPLICATION = "task_manager.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-import dj_database_url
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-# Для локальной разработки и тестов используем SQLite, для прода - PostgreSQL.
-# Для тестов всегда используем SQLite в памяти.
-if "test" in sys.argv:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": ":memory:",
-        }
-    }
-elif os.getenv("DB_ENGINE") == "django.db.backends.postgresql":
-    DATABASES = {
-        "default": dj_database_url.parse(
-            f"postgresql://{os.getenv('POSTGRES_USER')}:"
-            f"{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('DB_HOST')}:"
-            f"{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
-        )
-    }
-else:
-    # Локальная разработка - SQLite
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+DATABASES = {
+    "default": dj_database_url.parse(
+        f"postgresql://{os.getenv('POSTGRES_USER')}:"
+        f"{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('DB_HOST')}:"
+        f"{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+    )
+}
 
 
 # Password validation
@@ -132,6 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+LOGIN_URL = "/users/login/"
 
 
 # Internationalization

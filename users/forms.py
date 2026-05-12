@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.utils.translation import gettext_lazy as _
 
-from .models import User
+from users.models import User
 
 
 class UserRegisterForm(UserCreationForm):
@@ -15,11 +16,11 @@ class UserRegisterForm(UserCreationForm):
             "password2",
         )
         labels = {
-            "username": "Имя пользователя",
-            "first_name": "Имя",
-            "last_name": "Фамилия",
-            "password1": "Пароль",
-            "password2": "Подтверждение пароля",
+            "username": _("Username"),
+            "first_name": _("Name"),
+            "last_name": _("Last Name"),
+            "password1": _("Password"),
+            "password2": _("Password Confirmation"),
         }
 
 
@@ -28,14 +29,14 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ("username", "first_name", "last_name")
         labels = {
-            "username": "Имя пользователя",
-            "first_name": "Имя",
-            "last_name": "Фамилия",
+            "username": _("Username"),
+            "first_name": _("Name"),
+            "last_name": _("Last Name"),
         }
 
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(
-        label="Имя пользователя",
+        label=_("Username"),
         widget=forms.TextInput(attrs={"autofocus": True}),
     )

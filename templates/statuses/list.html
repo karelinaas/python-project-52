@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>{% trans "Statuses" %}</h1>
+            <a href="{% url 'statuses:create' %}" class="btn btn-primary">
+                {% trans "Create a status" %}
+            </a>
+        </div>
+
+        {% if statuses %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{% trans "Name" %}</th>
+                        <th scope="col">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for status in statuses %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ status.name }}</td>
+                        <td>
+                            <a href="{% url 'statuses:update' status.pk %}" 
+                               class="btn btn-sm btn-outline-primary me-2">
+                                {% trans "Change" %}
+                            </a>
+                            <a href="{% url 'statuses:delete' status.pk %}" 
+                               class="btn btn-sm btn-outline-danger">
+                                {% trans "Delete" %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info" role="alert">
+            {% trans "Statuses not found" %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

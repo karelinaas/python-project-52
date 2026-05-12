@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>{% trans "Tasks" %}</h1>
+            <a href="{% url 'tasks:create' %}" class="btn btn-primary">
+                {% trans "Create task" %}
+            </a>
+        </div>
+
+        {% if tasks %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{% trans "Name" %}</th>
+                        <th scope="col">{% trans "Status" %}</th>
+                        <th scope="col">{% trans "Author" %}</th>
+                        <th scope="col">{% trans "Executor" %}</th>
+                        <th scope="col">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>
+                            <a href="{% url 'tasks:detail' task.pk %}">{{ task.name }}</a>
+                        </td>
+                        <td>{{ task.status.name }}</td>
+                        <td>{{ task.author.get_full_name|default:task.author.username }}</td>
+                        <td>{{ task.executor.get_full_name|default:task.executor.username|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'tasks:detail' task.pk %}" 
+                               class="btn btn-sm btn-outline-info me-2">
+                                {% trans "Show" %}
+                            </a>
+                            <a href="{% url 'tasks:update' task.pk %}" 
+                               class="btn btn-sm btn-outline-primary me-2">
+                                {% trans "Change" %}
+                            </a>
+                            <a href="{% url 'tasks:delete' task.pk %}" 
+                               class="btn btn-sm btn-outline-danger">
+                                {% trans "Delete" %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info" role="alert">
+            {% trans "Tasks not found" %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

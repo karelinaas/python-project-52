@@ -9,10 +9,12 @@ from django.forms import BaseForm
 from django.http import HttpRequest, HttpResponse, HttpResponseBase
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from .forms import UserLoginForm, UserRegisterForm, UserUpdateForm
-from .models import User
+from tasks.models import Task
+from users.forms import UserLoginForm, UserRegisterForm, UserUpdateForm
+from users.models import User
 
 
 class UserListView(ListView):
@@ -30,7 +32,7 @@ class UserCreateView(CreateView):
     def form_valid(self, form: UserRegisterForm) -> HttpResponse:
         messages.success(
             self.request,
-            "Пользователь успешно зарегистрирован",
+            _("The user was registered successfully"),
         )
         return super().form_valid(form)
 
@@ -49,12 +51,15 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     ) -> HttpResponseBase:
         user = self.get_object()
         if request.user != user:
-            messages.error(self.request, "У вас нет прав для изменения")
+            messages.error(
+                self.request,
+                _("You have no rights to change entity"),
+            )
             return redirect("users:list")
         return super().dispatch(request, *args, **kwargs)
     
     def form_valid(self, form: UserUpdateForm) -> HttpResponse:
-        messages.success(self.request, "Пользователь успешно изменен")
+        messages.success(self.request, _("User changed successfully"))
         return super().form_valid(form)
 
 
@@ -71,12 +76,26 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     ) -> HttpResponseBase:
         user = self.get_object()
         if request.user != user:
-            messages.error(self.request, "У вас нет прав для изменения")
+            messages.error(
+                self.request,
+                _("You have no rights to change entity"),
+            )
             return redirect("users:list")
         return super().dispatch(request, *args, **kwargs)
     
     def form_valid(self, form: BaseForm) -> HttpResponse:
-        messages.success(self.request, "Пользователь успешно удален")
+        user = self.get_object()
+        
+        if Task.objects.filter(author=user).exists() or (
+            Task.objects.filter(executor=user).exists()
+        ):
+            messages.error(
+                self.request,
+                _("Cannot delete user while they have associated tasks"),
+            )
+            return redirect("users:list")
+        
+        messages.success(self.request, _("User deleted successfully"))
         return super().form_valid(form)
 
 
@@ -85,7 +104,7 @@ class LoginView(BaseLoginView):
     template_name = "users/login.html"
     
     def form_valid(self, form: AuthenticationForm) -> HttpResponse:
-        messages.success(self.request, "Вы залогинены")
+        messages.success(self.request, _("You are logged in"))
         return super().form_valid(form)
     
     def get_success_url(self) -> str:
@@ -99,7 +118,7 @@ class LogoutView(BaseLogoutView):
         *args,
         **kwargs,
     ) -> HttpResponseBase:
-        messages.success(request, "Вы разлогинены")
+        messages.success(request, _("You are logged out"))
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self) -> str:

@@ -1,10 +1,10 @@
 PORT ?= 8000
 
 lint:
-	uv run ruff check task_manager
+	uv run ruff check .
 
 lint-fix:
-	uv run ruff check task_manager --fix
+	uv run ruff check . --fix
 
 install:
 	uv sync
