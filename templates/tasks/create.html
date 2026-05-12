@@ -60,6 +60,18 @@
                         {% endif %}
                     </div>
 
+                    <div class="mb-3">
+                        <label for="{{ form.labels.id_for_label }}" class="form-label">
+                            {{ form.labels.label }}
+                        </label>
+                        {{ form.labels }}
+                        {% if form.labels.errors %}
+                        <div class="form-text text-danger">
+                            {{ form.labels.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+
                     <div class="d-flex justify-content-between">
                         <a href="{% url 'tasks:list' %}" class="btn btn-secondary">
                             {% trans "Cancel" %}

@@ -131,9 +131,10 @@ class TaskCRUDTest(TestCase):
         self.assertEqual(new_task.executor, self.other_user)
         
         # Проверка, что метки были добавлены
-        self.assertEqual(new_task.labels.count(), 2)
-        self.assertIn(label1, new_task.labels.all())
-        self.assertIn(label2, new_task.labels.all())
+        labels = new_task.labels.all()
+        self.assertEqual(labels.count(), 2)
+        self.assertIn(label1, labels)
+        self.assertIn(label2, labels)
         
         # Проверка flash-сообщения
         messages = list(get_messages(response.wsgi_request))
