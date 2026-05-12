@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpRequest
+from django.utils.translation import gettext_lazy as _
 
 from tasks.models import Task
 
@@ -12,13 +13,26 @@ class TaskAdmin(admin.ModelAdmin):
         "status",
         "author",
         "executor",
+        "get_labels",
         "created_at",
         "updated_at",
     )
-    list_filter = ("status", "author", "executor", "created_at", "updated_at")
+    list_filter = (
+        "status",
+        "author",
+        "executor",
+        "labels",
+        "created_at",
+        "updated_at",
+    )
     search_fields = ("name", "description")
     ordering = ("-created_at",)
     readonly_fields = ("created_at", "updated_at")
+    filter_horizontal = ("labels",)
+    
+    def get_labels(self, task: Task) -> str:
+        return ", ".join([label.name for label in task.labels.all()])
+    get_labels.short_description = _("Labels")
     
     def get_queryset(self, request: HttpRequest) -> QuerySet[Task]:
         qs = super().get_queryset(request)

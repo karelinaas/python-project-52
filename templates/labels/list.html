@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>{% trans "Labels" %}</h1>
+            <a href="{% url 'labels:create' %}" class="btn btn-primary">
+                {% trans "Create label" %}
+            </a>
+        </div>
+
+        {% if labels %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{% trans "Name" %}</th>
+                        <th scope="col">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for label in labels %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ label.name }}</td>
+                        <td>
+                            <a href="{% url 'labels:update' label.pk %}" 
+                               class="btn btn-sm btn-outline-primary me-2">
+                                {% trans "Change" %}
+                            </a>
+                            <a href="{% url 'labels:delete' label.pk %}" 
+                               class="btn btn-sm btn-outline-danger">
+                                {% trans "Delete" %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info" role="alert">
+            {% trans "Labels not found" %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

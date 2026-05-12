@@ -331,3 +331,54 @@ msgstr "Пользователь успешно удален"
 #: users/views.py:96
 msgid "Cannot delete user while they have associated tasks"
 msgstr "Нельзя удалить пользователя, пока он связан с задачами"
+
+msgid "Additional information"
+msgstr "Дополнительная информация"
+
+msgid "Labels"
+msgstr "Метки"
+
+msgid "Are you sure you want to delete the label "
+msgstr "Вы уверены, что хотите удалить метку "
+
+msgid "Create label"
+msgstr "Создать метку"
+
+msgid "Labels not found"
+msgstr "Метки не найдены"
+
+msgid "Label"
+msgstr "Метка"
+
+msgid "Label created successfully"
+msgstr "Метка успешно создана"
+
+msgid "Label updated successfully"
+msgstr "Метка успешно изменена"
+
+msgid "Label deleted successfully"
+msgstr "Метка успешно удалена"
+
+msgid "Cannot delete label because it is in use"
+msgstr "Невозможно удалить метку"
+
+msgid "Update label"
+msgstr "Изменить метку"
+
+msgid "Delete label"
+msgstr "Удалить метку"
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""

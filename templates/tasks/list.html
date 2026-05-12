@@ -21,6 +21,7 @@
                         <th scope="col">{% trans "Status" %}</th>
                         <th scope="col">{% trans "Author" %}</th>
                         <th scope="col">{% trans "Executor" %}</th>
+                        <th scope="col">{% trans "Labels" %}</th>
                         <th scope="col">{% trans "Actions" %}</th>
                     </tr>
                 </thead>
@@ -34,6 +35,13 @@
                         <td>{{ task.status.name }}</td>
                         <td>{{ task.author.get_full_name|default:task.author.username }}</td>
                         <td>{{ task.executor.get_full_name|default:task.executor.username|default:"-" }}</td>
+                        <td>
+                            {% for label in task.labels.all %}
+                                <span class="badge bg-secondary me-1">{{ label.name }}</span>
+                            {% empty %}
+                                -
+                            {% endfor %}
+                        </td>
                         <td>
                             <a href="{% url 'tasks:detail' task.pk %}" 
                                class="btn btn-sm btn-outline-info me-2">

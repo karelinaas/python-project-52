@@ -22,6 +22,11 @@ class TaskListView(LoginRequiredMixin, ListView):
     template_name = "tasks/list.html"
     context_object_name = "tasks"
     extra_context = {"title": _("Tasks")}
+    queryset = Task.objects.select_related(
+        "author",
+        "executor",
+        "status",
+    ).prefetch_related("labels")
 
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
