@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from labels.models import Label
 from statuses.models import Status
 from tasks.models import Task
 
@@ -26,6 +27,7 @@ class TaskCRUDTest(TestCase):
         self.other_user.save()
         
         self.status = Status.objects.create(name="Test Status")
+        self.label = Label.objects.create(name="Test Label")
         self.task = Task.objects.create(
             name=self.TEST_TASK_NAME,
             description=self.TEST_TASK_DESCRIPTION,
@@ -33,6 +35,7 @@ class TaskCRUDTest(TestCase):
             author=self.user,
             executor=self.other_user,
         )
+        self.task.labels.add(self.label)
 
     def test_task_list_view_get(self):
         """Тест GET /tasks/ - страница со списком всех задач"""
@@ -63,6 +66,7 @@ class TaskCRUDTest(TestCase):
         self.assertContains(response, _("Description"))
         self.assertContains(response, _("Status"))
         self.assertContains(response, _("Executor"))
+        self.assertContains(response, _("Labels"))
         
     def test_task_create_view_post_success(self):
         """Тест POST /tasks/create/ - успешное создание задачи"""
@@ -89,6 +93,47 @@ class TaskCRUDTest(TestCase):
         self.assertEqual(new_task.status, self.status)
         self.assertEqual(new_task.author, self.user)
         self.assertEqual(new_task.executor, self.other_user)
+        
+        # Проверка flash-сообщения
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(messages[0]), _("Task created successfully"))
+        
+    def test_task_create_with_labels(self):
+        """Тест создания задачи с метками"""
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
+        
+        # Создаем дополнительные метки для теста
+        label1 = Label.objects.create(name="Bug")
+        label2 = Label.objects.create(name="Feature")
+        
+        new_task_name = "Task with Labels"
+        new_task_description = "Task description with labels"
+        response = self.client.post(
+            reverse("tasks:create"),
+            {
+                "name": new_task_name,
+                "description": new_task_description,
+                "status": self.status.pk,
+                "executor": self.other_user.pk,
+                "labels": [label1.pk, label2.pk],
+            },
+        )
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("tasks:list"))
+        
+        # Проверка, что задача была создана с метками
+        new_task = Task.objects.get(name=new_task_name)
+        self.assertEqual(new_task.name, new_task_name)
+        self.assertEqual(new_task.description, new_task_description)
+        self.assertEqual(new_task.status, self.status)
+        self.assertEqual(new_task.author, self.user)
+        self.assertEqual(new_task.executor, self.other_user)
+        
+        # Проверка, что метки были добавлены
+        self.assertEqual(new_task.labels.count(), 2)
+        self.assertIn(label1, new_task.labels.all())
+        self.assertIn(label2, new_task.labels.all())
         
         # Проверка flash-сообщения
         messages = list(get_messages(response.wsgi_request))
