@@ -87,13 +87,23 @@ WSGI_APPLICATION = "task_manager.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": dj_database_url.parse(
-        f"postgresql://{os.getenv('POSTGRES_USER')}:"
-        f"{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('DB_HOST')}:"
-        f"{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
-    )
-}
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.config(default=DATABASE_URL)
+    }
+else:
+    # Запасной вариант для локальной разработки, если DATABASE_URL не задан
+    DATABASES = {
+        "default": dj_database_url.parse(
+            f"postgresql://{os.getenv('POSTGRES_USER', 'postgres')}:"
+            f"{os.getenv('POSTGRES_PASSWORD', '')}@"
+            f"{os.getenv('DB_HOST', '127.0.0.1')}:"
+            f"{os.getenv('DB_PORT', '5432')}/"
+            f"{os.getenv('DB_NAME', 'task_manager')}"
+        )
+    }
 
 
 # Password validation
