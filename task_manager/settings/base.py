@@ -35,7 +35,7 @@ ALLOWED_HOSTS = (
     os.getenv("ALLOWED_HOSTS", "").split(",")
     if os.getenv("ALLOWED_HOSTS") else ["localhost"]
 )
-ALLOWED_HOSTS.append("webserver:9000")
+ALLOWED_HOSTS.append("webserver")
 
 # Application definition
 
