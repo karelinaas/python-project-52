@@ -31,21 +31,5 @@
             </div>
         </div>
     </div>
-    
-    {% if not user.is_authenticated %}
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h5>{% trans "Account Actions" %}</h5>
-            </div>
-            <div class="card-body">
-                <div class="d-grid gap-2">
-                    <a href="{% url 'users:login' %}" class="btn btn-outline-primary">{% trans "Log in" %}</a>
-                    <a href="{% url 'users:create' %}" class="btn btn-outline-success">{% trans "Registration" %}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 </div>
 {% endblock %}
