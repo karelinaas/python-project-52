@@ -43,20 +43,14 @@
                 </ul>
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                {{ user.username }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'users:update' user.pk %}">{% trans "Change" %}</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="post" action="{% url 'users:logout' %}" class="d-inline">
-                                        {% csrf_token %}
-                                        <button type="submit" class="dropdown-item btn btn-link">{% trans "Logout" %}</button>
-                                    </form>
-                                </li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:update' user.pk %}">{% trans "Change" %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link nav-link">{% trans "Logout" %}</button>
+                            </form>
                         </li>
                     {% else %}
                         <li class="nav-item">
