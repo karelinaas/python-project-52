@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: task_manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-12 14:55+0000\n"
+"POT-Creation-Date: 2026-06-01 09:09+0000\n"
 "PO-Revision-Date: 2026-05-11 16:35+0300\n"
 "Last-Translator: Alexandra Minina <i@minina-work.ru>\n"
 "Language-Team: Russian\n"
@@ -20,7 +20,7 @@ msgstr "Дополнительная информация"
 #: statuses/tests.py:48 tasks/forms.py:15 tasks/forms.py:25 tasks/models.py:10
 #: tasks/tests.py:66 templates/labels/list.html:20
 #: templates/statuses/list.html:20 templates/tasks/list.html:62
-#: users/forms.py:20 users/forms.py:33 users/models.py:7
+#: users/forms.py:20 users/forms.py:44 users/models.py:7
 msgid "Name"
 msgstr "Имя"
 
@@ -120,10 +120,10 @@ msgstr "Создать статус"
 msgid "Change a status"
 msgstr "Изменить статус"
 
-#: statuses/views.py:38 templates/base.html:51 templates/labels/list.html:32
+#: statuses/views.py:38 templates/base.html:47 templates/labels/list.html:32
 #: templates/statuses/list.html:32 templates/statuses/update.html:16
-#: templates/tasks/detail.html:11 templates/tasks/list.html:94
-#: templates/users/user_form.html:104 templates/users/user_list.html:28
+#: templates/tasks/detail.html:11 templates/tasks/list.html:100
+#: templates/users/user_form.html:112 templates/users/user_list.html:28
 msgid "Change"
 msgstr "Изменить"
 
@@ -230,16 +230,15 @@ msgstr "Менеджер задач"
 msgid "Users"
 msgstr "Пользователи"
 
-#: templates/base.html:56
+#: templates/base.html:52
 msgid "Logout"
 msgstr "Выход"
 
-#: templates/base.html:63 templates/users/login.html:9
+#: templates/base.html:57 templates/users/login.html:9
 msgid "Login"
 msgstr "Вход"
 
-#: templates/base.html:66 templates/home.html:44
-#: templates/users/user_list.html:7
+#: templates/base.html:60 templates/users/user_list.html:7
 msgid "Registration"
 msgstr "Регистрация"
 
@@ -271,14 +270,6 @@ msgstr "Управляйте пользователями и их правами
 msgid "Manage Users"
 msgstr "Управление пользователями"
 
-#: templates/home.html:39
-msgid "Account Actions"
-msgstr "Действия с аккаунтом"
-
-#: templates/home.html:43 templates/users/login.html:53
-msgid "Log in"
-msgstr "Войти"
-
 #: templates/labels/create.html:19 templates/labels/delete.html:22
 #: templates/labels/update.html:19 templates/statuses/create.html:19
 #: templates/statuses/delete.html:22 templates/statuses/update.html:19
@@ -306,7 +297,7 @@ msgid "Actions"
 msgstr "Действия"
 
 #: templates/labels/list.html:36 templates/statuses/list.html:36
-#: templates/tasks/detail.html:14 templates/tasks/list.html:98
+#: templates/tasks/detail.html:14 templates/tasks/list.html:104
 #: templates/users/user_list.html:29
 msgid "Delete"
 msgstr "Удалить"
@@ -335,24 +326,28 @@ msgstr "Дата создания"
 msgid "Back to list"
 msgstr "Назад к списку"
 
-#: templates/tasks/list.html:90
+#: templates/tasks/list.html:96
 msgid "Show"
 msgstr "Показать"
 
-#: templates/tasks/list.html:108
+#: templates/tasks/list.html:114
 msgid "Tasks not found"
 msgstr "Задачи не найдены"
 
 #: templates/users/login.html:25 templates/users/user_form.html:31
-#: templates/users/user_list.html:14 users/forms.py:19 users/forms.py:32
-#: users/forms.py:40 users/tests.py:30 users/tests.py:84 users/tests.py:142
+#: templates/users/user_list.html:14 users/forms.py:19 users/forms.py:43
+#: users/forms.py:70 users/tests.py:30 users/tests.py:84 users/tests.py:142
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: templates/users/login.html:39 templates/users/user_form.html:74
+#: templates/users/login.html:39 templates/users/user_form.html:77
 #: users/forms.py:22 users/tests.py:31 users/tests.py:85
 msgid "Password"
 msgstr "Пароль"
+
+#: templates/users/login.html:53
+msgid "Log in"
+msgstr "Войти"
 
 #: templates/users/user_confirm_delete.html:9
 msgid "Delete User"
@@ -366,7 +361,7 @@ msgstr "Вы уверены, что хотите удалить пользова
 msgid "Edit User"
 msgstr "Редактировать пользователя"
 
-#: templates/users/user_form.html:13 templates/users/user_form.html:106
+#: templates/users/user_form.html:13 templates/users/user_form.html:114
 msgid "Register"
 msgstr "Зарегистрировать"
 
@@ -375,17 +370,29 @@ msgid "First Name"
 msgstr "Имя"
 
 #: templates/users/user_form.html:59 templates/users/user_list.html:16
-#: users/forms.py:21 users/forms.py:34 users/models.py:8
+#: users/forms.py:21 users/forms.py:45 users/models.py:8
 msgid "Last Name"
 msgstr "Фамилия"
 
-#: templates/users/user_form.html:88 users/forms.py:23 users/tests.py:32
+#: templates/users/user_form.html:75 users/forms.py:29
+msgid "New Password"
+msgstr "Пароль"
+
+#: templates/users/user_form.html:93 users/forms.py:34
+msgid "Confirm New Password"
+msgstr "Подтверждение пароля"
+
+#: templates/users/user_form.html:95 users/forms.py:23 users/tests.py:32
 msgid "Password Confirmation"
 msgstr "Подтверждение пароля"
 
 #: templates/users/user_list.html:35
 msgid "No users found"
 msgstr "Пользователи не найдены"
+
+#: users/forms.py:54
+msgid "Passwords do not match"
+msgstr "Пароли не совпадают"
 
 #: users/models.py:11
 msgid "User"

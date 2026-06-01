@@ -25,6 +25,17 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
+    password1 = forms.CharField(
+        label=_("New Password"),
+        widget=forms.PasswordInput,
+        required=False
+    )
+    password2 = forms.CharField(
+        label=_("Confirm New Password"),
+        widget=forms.PasswordInput,
+        required=False
+    )
+
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name")
@@ -33,6 +44,25 @@ class UserUpdateForm(forms.ModelForm):
             "first_name": _("Name"),
             "last_name": _("Last Name"),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+
+        if password1 and password1 != password2:
+            raise forms.ValidationError(_("Passwords do not match"))
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password1 = self.cleaned_data.get("password1")
+        if password1:
+            user.set_password(password1)
+        if commit:
+            user.save()
+        return user
 
 
 class UserLoginForm(AuthenticationForm):
