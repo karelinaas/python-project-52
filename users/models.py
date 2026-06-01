@@ -10,3 +10,8 @@ class User(AbstractUser):
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users")
+
+    def __str__(self) -> str:
+        if self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        return self.username
