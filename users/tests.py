@@ -41,9 +41,9 @@ class UserCRUDTest(TestCase):
             "password2": "testpass123"
         }
         response = self.client.post(reverse("users:create"), data=user_data)
-        
+
         # Проверяем редирект на страницу входа
-        self.assertRedirects(response, reverse("users:login"))
+        self.assertRedirects(response, reverse("login"))
         
         # Проверяем, что пользователь создан
         self.assertTrue(
@@ -79,7 +79,7 @@ class UserCRUDTest(TestCase):
 
     def test_user_login_view_get(self):
         """Тест страницы входа (GET)"""
-        response = self.client.get(reverse("users:login"))
+        response = self.client.get(reverse("login"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, _("Username"))
         self.assertContains(response, _("Password"))
@@ -92,7 +92,7 @@ class UserCRUDTest(TestCase):
         self.user.save()
 
         response = self.client.post(
-            reverse("users:login"),
+            reverse("login"),
             data={
                 "username": "testuser1",
                 "password": password,

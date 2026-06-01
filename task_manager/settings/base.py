@@ -33,9 +33,8 @@ DEBUG = bool(os.getenv("DEBUG", "False"))
 
 ALLOWED_HOSTS = (
     os.getenv("ALLOWED_HOSTS", "").split(",")
-    if os.getenv("ALLOWED_HOSTS") else ["localhost"]
+    if os.getenv("ALLOWED_HOSTS") else ["localhost", "webserver"]
 )
-ALLOWED_HOSTS.append("webserver")
 
 # Application definition
 
@@ -112,9 +111,6 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
@@ -125,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL = "/users/login/"
+LOGIN_URL = "/login/"
 
 
 # Internationalization
