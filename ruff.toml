@@ -15,3 +15,7 @@ select = ["E", "F", "I", "C90", "Q000"]
 docstring-quotes = "double"
 inline-quotes = "double"
 multiline-quotes = "double"
+
+[lint.isort]
+force-single-line = true
+combine-as-imports = false
