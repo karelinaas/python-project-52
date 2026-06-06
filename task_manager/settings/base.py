@@ -94,7 +94,6 @@ if DATABASE_URL:
         "default": dj_database_url.config(default=DATABASE_URL)
     }
 else:
-    # Запасной вариант для локальной разработки, если DATABASE_URL не задан
     DATABASES = {
         "default": dj_database_url.parse(
             f"postgresql://{os.getenv('POSTGRES_USER', 'postgres')}:"
