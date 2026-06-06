@@ -17,5 +17,5 @@ inline-quotes = "double"
 multiline-quotes = "double"
 
 [lint.isort]
-force-single-line = true
-combine-as-imports = false
+force-single-line = false
+combine-as-imports = true
