@@ -9,6 +9,22 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: your_db_user
+          POSTGRES_PASSWORD: your_db_password
+          POSTGRES_DB: your_db_name
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
     strategy:
       matrix:
         python-version: ["3.12"]
@@ -33,6 +49,12 @@ jobs:
       run: uv run ruff check .
     
     - name: Run tests with coverage
+      env:
+        DB_NAME: your_db_name
+        DB_USER: your_db_user
+        DB_PASSWORD: your_db_password
+        DB_HOST: localhost
+        DB_PORT: 5432
       run: uv run coverage run manage.py test
     
     - name: Upload coverage reports
