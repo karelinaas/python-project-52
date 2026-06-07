@@ -58,6 +58,9 @@ jobs:
         SECRET_KEY: test_secret_key
       run: uv run coverage run manage.py test
     
+    - name: Generate Coverage XML Report
+      run: uv run coverage xml
+
     - name: Upload coverage reports
       uses: actions/upload-artifact@v4
       with:
