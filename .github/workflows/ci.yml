@@ -55,6 +55,7 @@ jobs:
         POSTGRES_PASSWORD: your_db_password
         DB_HOST: localhost
         DB_PORT: 5432
+        SECRET_KEY: test_secret_key
       run: uv run coverage run manage.py test
     
     - name: Upload coverage reports
