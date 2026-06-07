@@ -3,6 +3,8 @@
 
 [![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-light.svg)](https://sonarcloud.io/summary/new_code?id=karelinaas_python-project-52)
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=karelinaas_python-project-52&metric=coverage)](https://sonarcloud.io/summary/new_code?id=karelinaas_python-project-52)
+
 # Task Manager
 
 Система управления задачами, разработанная на Django. Приложение позволяет создавать, отслеживать и управлять задачами с возможностью назначения статусов, меток и исполнителей.

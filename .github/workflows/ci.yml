@@ -63,3 +63,15 @@ jobs:
       with:
         name: coverage-report
         path: coverage.xml
+
+    - name: SonarQubeScan
+      uses: SonarSource/sonarqube-scan-action@v5
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=karelinaas_python-project-52
+          -Dsonar.organization=karelinaas
+          -Dsonar.python.coverage.reportPaths=coverage.xml
+          -Dsonar.coverage.exclusions=**/tests.py
+          -Dsonar.exclusions=**/tests.py
